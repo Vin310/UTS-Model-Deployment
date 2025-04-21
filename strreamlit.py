@@ -29,6 +29,7 @@ def main():
     
     
     data = {
+    'index' : 0,
     'person_age' : float(person_age),
     'person_gender' : person_gender,
     'person_education' : person_education,
@@ -44,7 +45,7 @@ def main():
     'previous_loan_defaults_on_file' : previous_loan_defaults_on_file
     }
     
-    df = pd.DataFrame([list(data.values())], columns=['person_age',
+    df = pd.DataFrame([list(data.values())], columns=['index', 'person_age',
     'person_gender',
     'person_education',
     'person_income',
