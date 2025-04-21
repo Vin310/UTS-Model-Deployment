@@ -16,11 +16,11 @@ def main():
     person_age = st.number_input('Age',min_value=0,step=1)
     person_gender = st.radio('Gender', ['female','male'])
     person_education = st.radio('Education',['Bachelor','Associate','High School','Master','Doctorate'])
-    person_income = st.number_input('Income',min_value=0.0)
-    person_emp_exp = st.number_input('Employee Experience',min_value=0,step=1)
+    person_income = st.number_input('Yearly Income',min_value=0.0)
+    person_emp_exp = st.number_input('Employee Experience (Year)',min_value=0,step=1)
     person_home_ownership = st.radio('Home Ownership',['RENT','MORTGAGE','OWN','OTHER'])
     loan_amnt = st.number_input('Loan Amount',min_value=0.0)
-    loan_intent = st.radio('Loan Intent',['EDUCATION','MEDICAL','VENTURE','PERSONAL','DEBTCONSOLIDATION','HOMEIMPROVEMENT'])
+    loan_intent = st.radio('Loan Intention',['EDUCATION','MEDICAL','VENTURE','PERSONAL','DEBTCONSOLIDATION','HOMEIMPROVEMENT'])
     loan_int_rate = st.number_input('Loan Interest Rate',min_value=0.0)
     loan_percent_income = st.number_input('Loan Percent Income',min_value=0.0)
     cb_person_cred_hist_length = st.number_input('Credit History Length',min_value=0,step=1)
@@ -76,7 +76,11 @@ def main():
     
     if st.button('Predict Loan Status'):
         result = make_prediction(df)
-        st.success(f"Loan Status : {result}")
+        
+        if result == 1:
+            st.success("Loan Status: ✅ Approved")
+        else:
+            st.error("Loan Status: ❌ Rejected")
         
 def make_prediction(data):
     input_array = np.array(data).reshape(1,-1)
