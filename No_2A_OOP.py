@@ -35,6 +35,8 @@ class DataHandler:
         self.df['person_gender'].replace('Male', 'male', inplace=True)
         self.df['person_gender'].replace('fe male', 'female', inplace=True)
         self.df['person_income'].fillna(self.df['person_income'].mean(), inplace=True)
+        self.df['person_age'] = self.df['person_age'].astype('int64')
+        self.df['cb_person_cred_hist_length'] = self.df['cb_person_cred_hist_length'].astype('int64')
         
     def create_X_y(self, target_column):
         self.target = self.df[target_column]
@@ -95,8 +97,8 @@ class ModelHandler:
         ownership_test = pd.DataFrame(train_encoded_ownership.transform(ownership_test).toarray(),columns=train_encoded_ownership.get_feature_names_out())
         intent_test = pd.DataFrame(train_encoded_intent.transform(intent_test).toarray(),columns=train_encoded_intent.get_feature_names_out())
 
-        self.x_train = self.x_train.reset_index()
-        self.x_test = self.x_test.reset_index()
+        self.x_train = self.x_train.reset_index(drop=True)
+        self.x_test = self.x_test.reset_index(drop=True)
 
         self.x_train_enc = pd.concat([self.x_train,education_train,ownership_train,intent_train], axis=1)
         self.x_test_enc = pd.concat([self.x_test,education_test,ownership_test,intent_test], axis=1)
@@ -126,7 +128,7 @@ class ModelHandler:
         print("Tuned Hyperparameters :", self.model.best_params_)
         print("Accuracy :",self.model.best_score_)
         
-        best_params = self.model.get_params() 
+        best_params = self.model.best_params_
         self.xgb_best = XGBClassifier(**best_params)
         self.xgb_best.fit(self.x_train_enc, self.y_train)
 
@@ -147,7 +149,6 @@ data_handler = DataHandler(file_path)
 data_handler.load_data()
 data_handler.detect_columns()
 data_handler.clean_anomaly()
-data_handler.label_encode_columns()
 data_handler.create_X_y('loan_status')
 
 X = data_handler.data
@@ -155,6 +156,7 @@ y = data_handler.target
 
 model_handler = ModelHandler(y,X)
 model_handler.split_data()
+model_handler.label_encode_columns()
 model_handler.one_hot_encode_columns()
 model_handler.train_with_gridsearch()
 model_handler.make_prediction()
