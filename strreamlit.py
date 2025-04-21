@@ -74,7 +74,8 @@ def main():
     df = df.drop(columns=['person_education','person_home_ownership','loan_intent'],axis=1)
     
     if st.button('Loan Status'):
-        result = make_prediction(df)
+        st.dataframe(df)
+        # result = make_prediction(df)
         st.success(f"Loan Status : {result}")
         
 def make_prediction(data):
