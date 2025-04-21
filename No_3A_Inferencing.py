@@ -13,7 +13,7 @@ intent_encoded = joblib.load('intent_encode.pkl')
 def main():
     st.title('Loan Status of Customer')
     
-    person_age = st.number_input('Age',min_value=0.0)
+    person_age = st.number_input('Age',min_value=0,step=1)
     person_gender = st.radio('Gender', ['female','male'])
     person_education = st.radio('Education',['Bachelor','Associate','High School','Master','Doctorate'])
     person_income = st.number_input('Income',min_value=0.0)
@@ -23,14 +23,14 @@ def main():
     loan_intent = st.radio('Loan Intent',['EDUCATION','MEDICAL','VENTURE','PERSONAL','DEBTCONSOLIDATION','HOMEIMPROVEMENT'])
     loan_int_rate = st.number_input('Loan Interest Rate',min_value=0.0)
     loan_percent_income = st.number_input('Loan Percent Income',min_value=0.0)
-    cb_person_cred_hist_length = st.number_input('Credit History Length',min_value=0.0)
+    cb_person_cred_hist_length = st.number_input('Credit History Length',min_value=0,step=1)
     credit_score = st.number_input('Credit Score',min_value=0,step=1)
     previous_loan_defaults_on_file = st.radio('Previous Loan',['Yes','No'])
     
     
     data = {
     'index' : 0,
-    'person_age' : float(person_age),
+    'person_age' : int(person_age),
     'person_gender' : person_gender,
     'person_education' : person_education,
     'person_income' : float(person_income),
@@ -40,7 +40,7 @@ def main():
     'loan_intent' : loan_intent,
     'loan_int_rate' : float(loan_int_rate),
     'loan_percent_income' : float(loan_percent_income),
-    'cb_person_cred_hist_length' : float(cb_person_cred_hist_length),
+    'cb_person_cred_hist_length' : int(cb_person_cred_hist_length),
     'credit_score' : int(credit_score),
     'previous_loan_defaults_on_file' : previous_loan_defaults_on_file
     }

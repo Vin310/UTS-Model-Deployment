@@ -97,8 +97,8 @@ class ModelHandler:
         ownership_test = pd.DataFrame(train_encoded_ownership.transform(ownership_test).toarray(),columns=train_encoded_ownership.get_feature_names_out())
         intent_test = pd.DataFrame(train_encoded_intent.transform(intent_test).toarray(),columns=train_encoded_intent.get_feature_names_out())
 
-        self.x_train = self.x_train.reset_index(drop=True)
-        self.x_test = self.x_test.reset_index(drop=True)
+        self.x_train = self.x_train.reset_index()
+        self.x_test = self.x_test.reset_index()
 
         self.x_train_enc = pd.concat([self.x_train,education_train,ownership_train,intent_train], axis=1)
         self.x_test_enc = pd.concat([self.x_test,education_test,ownership_test,intent_test], axis=1)
